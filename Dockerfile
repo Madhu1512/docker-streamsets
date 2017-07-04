@@ -1,5 +1,6 @@
 FROM streamsets/datacollector:2.6.0.1
 
+ARG SDC_USER=sdc
 ENV ADD_LIBS=streamsets-datacollector-elasticsearch_5-lib,streamsets-datacollector-jdbc-lib,streamsets-datacollector-jython_2_7-lib
 
 USER root
