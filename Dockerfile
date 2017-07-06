@@ -4,6 +4,8 @@ ARG ADD_LIBS=streamsets-datacollector-elasticsearch_5-lib,streamsets-datacollect
 
 RUN if [[ ! -z $ADD_LIBS ]]; then $SDC_DIST/bin/streamsets stagelibs -install=$ADD_LIBS ; fi
 
+USER root
 COPY docker-entrypoint.sh /
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["dc", "-exec"]
