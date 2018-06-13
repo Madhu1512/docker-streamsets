@@ -6,6 +6,7 @@ RUN if [[ ! -z $ADD_LIBS ]]; then $SDC_DIST/bin/streamsets stagelibs -install=$A
 
 USER root
 COPY docker-entrypoint.sh /
+COPY ldap-login.conf /etc/sdc/
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["dc", "-exec"]
