@@ -36,4 +36,8 @@ if [ ! -z "$SDC_ADMIN_PW" ]; then
    sed -i -e "/admin:\s*MD5:/ s/:.*/: MD5:${SDC_ADMIN_PW},user,admin/" "${SDC_CONF}/form-realm.properties"
 fi
 
+if [ ! -z "$SDC_LDAP_PW" ]; then
+   echo ${SDC_LDAP_PW} > ${SDC_CONF}/ldap-bind-password.txt
+fi
+
 exec "${SDC_DIST}/bin/streamsets" "$@"
