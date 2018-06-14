@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# We translate environment variables to sdc.properties and rewrite them.
+# We translate environment variables to sdc.properties and ldap-login.conf and rewrite them.
 set_conf() {
   if [ $# -ne 3 ]; then
     echo "set_conf requires three arguments: <key> <value> <conf>"
@@ -15,10 +15,8 @@ set_conf() {
 
   if [ "$3" == "conf" ]; then
     sed -i 's|^#\?\('"$1"'=\).*|\1'"$2"'|' "${SDC_CONF}/sdc.properties"
-  fi
-
-  if [ "$3" == "ldap" ]; then 
-    sed -i 's|^#\?\('"$1"'=\).*|\1'"$2"'|' "${SDC_CONF}/ldap-login.conf"
+  elif [ "$3" == "ldap" ]; then
+    sed -i 's|\('"$1"'=\"\).*|\1'"$2"'\"|i' "${SDC_CONF}/ldap-login.conf" 
   fi
 }
 
@@ -46,8 +44,8 @@ if [ ! -z "$SDC_ADMIN_PW" ]; then
    sed -i -e "/admin:\s*MD5:/ s/:.*/: MD5:${SDC_ADMIN_PW},user,admin/" "${SDC_CONF}/form-realm.properties"
 fi
 
-if [ ! -z "$SDC_LDAP_PW" ]; then
-   echo ${SDC_LDAP_PW} > "${SDC_CONF}/ldap-bind-password.txt"
+if [ ! -z "$SDC_AD_PW" ]; then
+   echo ${SDC_AD_PW} > ${SDC_CONF}/ldap-bind-password.txt
 fi
 
 exec "${SDC_DIST}/bin/streamsets" "$@"
