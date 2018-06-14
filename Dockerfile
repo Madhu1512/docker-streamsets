@@ -1,4 +1,4 @@
-FROM streamsets/datacollector:2.7.2.0
+FROM streamsets/datacollector:3.3.0-latest
 
 ARG ADD_LIBS=streamsets-datacollector-elasticsearch_5-lib,streamsets-datacollector-jdbc-lib,streamsets-datacollector-jython_2_7-lib
 
